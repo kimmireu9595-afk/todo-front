@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
-const API_BASE = 'http://localhost:5001'
+const API_URL =
+  import.meta.env.VITE_API_BASE || 'https://todo-back-production-a40d.up.railway.app'
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -21,7 +22,7 @@ function App() {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`${API_BASE}/todos`)
+      const response = await fetch(`${API_URL}/todos`)
       const data = await response.json()
       if (!response.ok || !data.ok) {
         throw new Error(data.message || 'Failed to load todos')
@@ -45,7 +46,7 @@ function App() {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`${API_BASE}/todos`, {
+      const response = await fetch(`${API_URL}/todos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: trimmed, completed: false }),
@@ -67,7 +68,7 @@ function App() {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`${API_BASE}/todos/${todo._id}`, {
+      const response = await fetch(`${API_URL}/todos/${todo._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !todo.completed }),
@@ -90,7 +91,7 @@ function App() {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`${API_BASE}/todos/${todoId}`, {
+      const response = await fetch(`${API_URL}/todos/${todoId}`, {
         method: 'DELETE',
       })
       const data = await response.json()
@@ -121,7 +122,7 @@ function App() {
     setLoading(true)
     setError('')
     try {
-      const response = await fetch(`${API_BASE}/todos/${todoId}`, {
+      const response = await fetch(`${API_URL}/todos/${todoId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: trimmed }),
